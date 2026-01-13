@@ -8,35 +8,40 @@ import { HouseId } from "@/lib/houses";
 import { Loader2 } from "lucide-react";
 
 interface AnalysisScreenProps {
-    answers: Option[];
-    onComplete: (house: HouseId) => void;
+  answers: Option[];
+  onComplete: (house: HouseId) => void;
 }
 
 // HARDCODED KEY PROVIDED BY USER - DO NOT SHARE PUBLICLY IN REAL PROD
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
-export default function AnalysisScreen({ answers, onComplete }: AnalysisScreenProps) {
-    const [status, setStatus] = useState("Consulting the Maesters...");
+export default function AnalysisScreen({
+  answers,
+  onComplete,
+}: AnalysisScreenProps) {
+  const [status, setStatus] = useState("Consulting the Maesters...");
 
-    useEffect(() => {
-        if (GEMINI_API_KEY) {
-            analyzeResults(GEMINI_API_KEY);
-        } else {
-            setStatus("API key not configured...");
-            setTimeout(() => {
-                const fallbackHouses: HouseId[] = ['stark', 'lannister', 'targaryen'];
-                onComplete(fallbackHouses[Math.floor(Math.random() * fallbackHouses.length)]);
-            }, 2000);
-        }
-    }, []);
+  useEffect(() => {
+    if (GEMINI_API_KEY) {
+      analyzeResults(GEMINI_API_KEY);
+    } else {
+      setStatus("API key not configured...");
+      setTimeout(() => {
+        const fallbackHouses: HouseId[] = ["stark", "lannister", "targaryen"];
+        onComplete(
+          fallbackHouses[Math.floor(Math.random() * fallbackHouses.length)]
+        );
+      }, 2000);
+    }
+  }, []);
 
-    const analyzeResults = async (key: string) => {
-        try {
-            setStatus("Reading the flames...");
-            const genAI = new GoogleGenerativeAI(key);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const analyzeResults = async (key: string) => {
+    try {
+      setStatus("Reading the flames...");
+      const genAI = new GoogleGenerativeAI(key);
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-            const prompt = `
+      const prompt = `
         Analyze the following 5 answers from a personality test and assign them to one of these Game of Thrones Houses: 
         stark, lannister, targaryen, tyrell, baratheon, greyjoy.
         
@@ -54,63 +59,71 @@ export default function AnalysisScreen({ answers, onComplete }: AnalysisScreenPr
         Return ONLY the house ID in lowercase. Nothing else.
       `;
 
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text().trim().toLowerCase();
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text().trim().toLowerCase();
 
-            // Validate response
-            const validHouses: HouseId[] = ['stark', 'lannister', 'targaryen', 'tyrell', 'baratheon', 'greyjoy'];
-            const house = validHouses.find(h => text.includes(h)) || 'stark'; // Default to Stark if unclear
+      // Validate response
+      const validHouses: HouseId[] = [
+        "stark",
+        "lannister",
+        "targaryen",
+        "tyrell",
+        "baratheon",
+        "greyjoy",
+      ];
+      const house = validHouses.find((h) => text.includes(h)) || "stark"; // Default to Stark if unclear
 
-            // Artificial delay for dramatic effect
-            setTimeout(() => {
-                onComplete(house as HouseId);
-            }, 2000);
+      // Artificial delay for dramatic effect
+      setTimeout(() => {
+        onComplete(house as HouseId);
+      }, 2000);
+    } catch (error) {
+      console.error("Analysis failed:", error);
+      setStatus("The flames are unclear...");
+      // Fallback: Random for now to not block flow if API fails
+      setTimeout(() => {
+        const fallbackHouses: HouseId[] = ["stark", "lannister", "targaryen"];
+        onComplete(
+          fallbackHouses[Math.floor(Math.random() * fallbackHouses.length)]
+        );
+      }, 2000);
+    }
+  };
 
-        } catch (error) {
-            console.error("Analysis failed:", error);
-            setStatus("The flames are unclear...");
-            // Fallback: Random for now to not block flow if API fails
-            setTimeout(() => {
-                const fallbackHouses: HouseId[] = ['stark', 'lannister', 'targaryen'];
-                onComplete(fallbackHouses[Math.floor(Math.random() * fallbackHouses.length)]);
-            }, 2000);
-        }
-    };
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="max-w-md mx-auto w-full flex flex-col items-center justify-center text-center p-6"
+    >
+      <div className="flex flex-col items-center">
+        {/* Mystic Circle Animation */}
+        <div className="relative mb-12">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="w-32 h-32 border-4 border-dashed border-got-gold rounded-full opacity-30"
+          />
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 w-32 h-32 border-2 border-dotted border-got-crimson rounded-full opacity-50 scale-75"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-got-gold animate-spin" />
+          </div>
+        </div>
 
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="max-w-md mx-auto w-full flex flex-col items-center justify-center text-center p-6"
+        <motion.p
+          key={status}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="font-heading text-xl text-got-gold tracking-widest uppercase"
         >
-            <div className="flex flex-col items-center">
-                {/* Mystic Circle Animation */}
-                <div className="relative mb-12">
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                        className="w-32 h-32 border-4 border-dashed border-got-gold rounded-full opacity-30"
-                    />
-                    <motion.div
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-0 w-32 h-32 border-2 border-dotted border-got-crimson rounded-full opacity-50 scale-75"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <Loader2 className="w-8 h-8 text-got-gold animate-spin" />
-                    </div>
-                </div>
-
-                <motion.p
-                    key={status}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="font-heading text-xl text-got-gold tracking-widest uppercase"
-                >
-                    {status}
-                </motion.p>
-            </div>
-        </motion.div>
-    );
+          {status}
+        </motion.p>
+      </div>
+    </motion.div>
+  );
 }

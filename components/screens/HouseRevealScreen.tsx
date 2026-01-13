@@ -159,9 +159,7 @@ const handleDownload = async () => {
               <Download size={18} />
               Save Card
             </button>
-            <div className="absolute bottom-6 text-[#D4AF37]/60 text-[10px] tracking-[0.3em] uppercase">
-              Game of Thrones House Trial
-            </div>
+           
           </div>
         </motion.div>
       </motion.div>
