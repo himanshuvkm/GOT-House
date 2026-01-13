@@ -18,7 +18,7 @@ export const houses: Record<HouseId, House> = {
         name: 'House Stark',
         quote: 'Winter is Coming',
         description: 'Honor, loyalty, self-sacrifice, and moral consistency define you.',
-        sigil: '/assets/sigils/stark.png',
+        sigil: '/assets/sigils/stark1.png',
         colors: { primary: '#F5F5F5', secondary: '#2F4F4F' }
     },
     lannister: {
@@ -26,7 +26,7 @@ export const houses: Record<HouseId, House> = {
         name: 'House Lannister',
         quote: 'A Lannister always pays his debts',
         description: 'You value control, ambition, pragmatism, and power over emotion.',
-        sigil: '/assets/sigils/lannister.png',
+        sigil: '/assets/sigils/lannister1.png',
         colors: { primary: '#D4AF37', secondary: '#8B0000' }
     },
     targaryen: {
@@ -34,7 +34,7 @@ export const houses: Record<HouseId, House> = {
         name: 'House Targaryen',
         quote: 'Fire and Blood',
         description: 'Destiny, intensity, emotional extremes, and risk-taking drive you.',
-        sigil: '/assets/sigils/targaryen.png',
+        sigil: '/assets/sigils/targaryen1.png',
         colors: { primary: '#000000', secondary: '#8B0000' }
     },
     tyrell: {
@@ -42,7 +42,7 @@ export const houses: Record<HouseId, House> = {
         name: 'House Tyrell',
         quote: 'Growing Strong',
         description: 'Diplomacy, influence, subtle manipulation, and social intelligence.',
-        sigil: '/assets/sigils/tyrell.png',
+        sigil: '/assets/sigils/tyrell1.png',
         colors: { primary: '#228B22', secondary: '#D4AF37' }
     },
     baratheon: {
@@ -50,7 +50,7 @@ export const houses: Record<HouseId, House> = {
         name: 'House Baratheon',
         quote: 'Ours is the Fury',
         description: 'Impulse, strength, boldness, and emotional honesty.',
-        sigil: '/assets/sigils/baratheon.png',
+        sigil: '/assets/sigils/baratheon1.png',
         colors: { primary: '#FFD700', secondary: '#000000' }
     },
     greyjoy: {
@@ -58,7 +58,7 @@ export const houses: Record<HouseId, House> = {
         name: 'House Greyjoy',
         quote: 'We Do Not Sow',
         description: 'Independence, rebellion, self-reliance, and emotional distance.',
-        sigil: '/assets/sigils/greyjoy.png',
+        sigil: '/assets/sigils/greyjoy1.png',
         colors: { primary: '#FFD700', secondary: '#000000' } // Placeholder colors
     }
 };

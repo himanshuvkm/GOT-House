@@ -13,7 +13,7 @@ interface AnalysisScreenProps {
 }
 
 // HARDCODED KEY PROVIDED BY USER - DO NOT SHARE PUBLICLY IN REAL PROD
-const GEMINI_API_KEY = "AIzaSyC2J5Mxhx3KmKSWDPR8vt7LTWki5KOaRK8";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 export default function AnalysisScreen({ answers, onComplete }: AnalysisScreenProps) {
     const [status, setStatus] = useState("Consulting the Maesters...");
