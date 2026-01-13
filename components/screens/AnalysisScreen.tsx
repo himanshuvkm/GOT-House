@@ -19,7 +19,15 @@ export default function AnalysisScreen({ answers, onComplete }: AnalysisScreenPr
     const [status, setStatus] = useState("Consulting the Maesters...");
 
     useEffect(() => {
-        analyzeResults(GEMINI_API_KEY);
+        if (GEMINI_API_KEY) {
+            analyzeResults(GEMINI_API_KEY);
+        } else {
+            setStatus("API key not configured...");
+            setTimeout(() => {
+                const fallbackHouses: HouseId[] = ['stark', 'lannister', 'targaryen'];
+                onComplete(fallbackHouses[Math.floor(Math.random() * fallbackHouses.length)]);
+            }, 2000);
+        }
     }, []);
 
     const analyzeResults = async (key: string) => {
