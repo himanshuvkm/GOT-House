@@ -8,8 +8,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-cinzel);
+  --font-body: var(--font-fall);
+  
+  --color-got-gold: #D4AF37;
+  --color-got-crimson: #8B0000;
+  --color-got-black: #0a0a0a;
+  --color-got-grey: #1a1a1a;
+  --color-got-text: #e0e0e0;
 }
 
 @media (prefers-color-scheme: dark) {
