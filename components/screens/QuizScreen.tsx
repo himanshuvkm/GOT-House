@@ -69,10 +69,10 @@ export default function QuizScreen({ onComplete }: QuizScreenProps) {
                                 onClick={() => handleOptionSelect(option)}
                                 whileHover={{ scale: 1.02, borderColor: "#D4AF37" }}
                                 whileTap={{ scale: 0.98 }}
-                                className={`relative group h-full min-h-[160px] p-8 border-2 flex items-center justify-center text-center transition-all duration-300
+                                className={`relative group h-full min-h-[160px] p-8 border-2 flex items-center justify-center text-center transition-all duration-300 z-10 overflow-hidden
                   ${selectedId === option.id
-                                        ? "border-got-crimson bg-got-crimson/10"
-                                        : "border-got-grey bg-got-black/50 hover:bg-got-grey/30"
+                                        ? "border-got-gold bg-got-gold/10 shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+                                        : "border-got-grey bg-got-black/50 hover:bg-got-grey/30 hover:border-got-gold/50"
                                     }
                 `}
                             >
@@ -80,20 +80,32 @@ export default function QuizScreen({ onComplete }: QuizScreenProps) {
                                 <span className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-current opacity-30 group-hover:opacity-100 transition-opacity" />
                                 <span className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-current opacity-30 group-hover:opacity-100 transition-opacity" />
 
-                                <span className={`font-body text-xl md:text-2xl transition-colors duration-300 ${selectedId === option.id ? "text-got-crimson" : "text-stone-300 group-hover:text-got-gold"}`}>
+                                <span className={`font-body text-xl md:text-2xl transition-all duration-300 relative z-20 ${selectedId === option.id ? "text-got-gold font-bold scale-105 drop-shadow-[0_0_8px_rgba(212,175,55,0.8)]" : "text-stone-300 group-hover:text-got-gold"}`}>
                                     {option.text}
                                 </span>
 
-                                {/* Sword Slash Animation */}
+                                {/* Elegant Gold Selection Animation */}
                                 {selectedId === option.id && (
-                                    <motion.div
-                                        initial={{ scaleX: 0, opacity: 0 }}
-                                        animate={{ scaleX: 1, opacity: 1 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                                    >
-                                        <div className="w-[120%] h-1 bg-got-crimson shadow-[0_0_20px_rgba(139,0,0,0.8)] rotate-[-15deg]" />
-                                    </motion.div>
+                                    <>
+                                        <motion.div
+                                            initial={{ scaleX: 0, opacity: 0 }}
+                                            animate={{ scaleX: 1, opacity: 1 }}
+                                            transition={{ duration: 0.4, ease: "easeOut" }}
+                                            className="absolute top-0 left-0 right-0 h-1 bg-got-gold shadow-[0_0_15px_rgba(212,175,55,1)] pointer-events-none"
+                                        />
+                                        <motion.div
+                                            initial={{ scaleX: 0, opacity: 0 }}
+                                            animate={{ scaleX: 1, opacity: 1 }}
+                                            transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+                                            className="absolute bottom-0 left-0 right-0 h-1 bg-got-gold shadow-[0_0_15px_rgba(212,175,55,1)] pointer-events-none"
+                                        />
+                                        <motion.div
+                                            initial={{ scale: 0, opacity: 0.6 }}
+                                            animate={{ scale: 2, opacity: 0 }}
+                                            transition={{ duration: 0.8, ease: "easeOut" }}
+                                            className="absolute inset-0 bg-got-gold/30 rounded-lg pointer-events-none"
+                                        />
+                                    </>
                                 )}
                             </motion.button>
                         ))}
